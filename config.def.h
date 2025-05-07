@@ -138,6 +138,15 @@ static char *tagicons[][NUMTAGS] =
  * Refer to the Rule struct definition for the list of available fields depending on
  * the patches you enable.
  */
+#include <X11/XF86keysym.h>
+
+static const char *up_vol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+10%",   NULL };
+static const char *down_vol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-10%",   NULL };
+static const char *mute_vol[] = { "pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle", NULL };
+static const char *brighter[] = { "brightnessctl", "set", "10%+", NULL };
+static const char *dimmer[]   = { "brightnessctl", "set", "10%-", NULL };
+
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -151,6 +160,7 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 7)
+	RULE(.class = "protonvpn-app", .tags = 1 << 7, .isfloating = 1)
 };
 
 /* Bar rules allow you to configure what is shown where on the bar, as well as
@@ -281,7 +291,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_i,          incnmaster,             {.i = +1 } },
-	{ MODKEY|ShiftMask,				XK_d,          incnmaster,             {.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_d,          incnmaster,             {.i = -1 } },
 	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
@@ -289,18 +299,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return,     zoom,                   {0} },
 	{ MODKEY|Mod1Mask,              XK_u,          incrgaps,               {.i = +3 } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -3 } },
-	// { MODKEY|Mod1Mask,              XK_i,          incrigaps,              {.i = +1 } },
-	// { MODKEY|Mod1Mask|ShiftMask,    XK_i,          incrigaps,              {.i = -1 } },
-	// { MODKEY|Mod1Mask,              XK_o,          incrogaps,              {.i = +1 } },
-	// { MODKEY|Mod1Mask|ShiftMask,    XK_o,          incrogaps,              {.i = -1 } },
-	// { MODKEY|Mod1Mask,              XK_6,          incrihgaps,             {.i = +1 } },
-	// { MODKEY|Mod1Mask|ShiftMask,    XK_6,          incrihgaps,             {.i = -1 } },
-	// { MODKEY|Mod1Mask,              XK_7,          incrivgaps,             {.i = +1 } },
-	// { MODKEY|Mod1Mask|ShiftMask,    XK_7,          incrivgaps,             {.i = -1 } },
-	// { MODKEY|Mod1Mask,              XK_8,          incrohgaps,             {.i = +1 } },
-	// { MODKEY|Mod1Mask|ShiftMask,    XK_8,          incrohgaps,             {.i = -1 } },
-	// { MODKEY|Mod1Mask,              XK_9,          incrovgaps,             {.i = +1 } },
-	// { MODKEY|Mod1Mask|ShiftMask,    XK_9,          incrovgaps,             {.i = -1 } },
 	{ MODKEY|Mod1Mask,              XK_0,          togglegaps,             {0} },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,          defaultgaps,            {0} },
 	{ MODKEY,                       XK_v,          view,                   {0} },
@@ -321,6 +319,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,               {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
+
+	{ 0, 				XF86XK_AudioMute,        spawn,        {.v = mute_vol } },
+        { 0, 				XF86XK_AudioLowerVolume, spawn,        {.v = down_vol } },
+        { 0, 				XF86XK_AudioRaiseVolume, spawn,        {.v = up_vol } },
+	{ 0, 				XF86XK_MonBrightnessDown, spawn,       {.v = dimmer } },
+        { 0, 				XF86XK_MonBrightnessUp,   spawn,       {.v = brighter } },
+
+
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
