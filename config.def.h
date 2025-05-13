@@ -218,6 +218,8 @@ static const char *dmenucmd[] = {
 	NULL
 };
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *roficmd[]  = { "rofi", "-show", "drun" , NULL };
+static const char *printcmd[]  = { "flameshot", "gui", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
 static const StatusCmd statuscmds[] = {
@@ -286,7 +288,9 @@ ResourcePref resources[] = {
 static const Key keys[] = {
 	/* modifier                     key            function                argument */
 	{ MODKEY,                       XK_d,          spawn,                  {.v = dmenucmd } },
+	{ MODKEY,                       XK_r,          spawn,                  {.v = roficmd } },
 	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
+	{ MODKEY,             		XK_Print,      spawn,                  {.v = printcmd } },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
