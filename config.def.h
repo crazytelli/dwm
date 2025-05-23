@@ -4,6 +4,10 @@
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define CMD(...)   { .v = (const char*[]){ __VA_ARGS__, NULL } }
 
+#define BROWSER "zen-browser"
+// #define TERMINAL "alacritty"
+#define FILEMANAGER "thunar"
+
 /* appearance */
 static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const unsigned int snap           = 32;  /* snap pixel */
@@ -290,12 +294,12 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,          spawn,                  {.v = dmenucmd } },
 	{ MODKEY,                       XK_r,          spawn,                  {.v = roficmd } },
 	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
-	{ MODKEY,             		XK_Print,      spawn,                  {.v = printcmd } },
+	{ MODKEY,             		      XK_Print,      spawn,                  {.v = printcmd } },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_i,          incnmaster,             {.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_d,          incnmaster,             {.i = -1 } },
+	{ MODKEY|ShiftMask,		          XK_d,          incnmaster,             {.i = -1 } },
 	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
@@ -308,6 +312,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,          view,                   {0} },
 	{ MODKEY|ShiftMask,             XK_Tab,        shiftview,              { .i = -1 } },
 	{ MODKEY,                       XK_Tab,        shiftview,              { .i = +1 } },
+  { MODKEY,			                  XK_w,          spawn,                  {.v = (const char*[]){ BROWSER, NULL } } },
+  { MODKEY,			                  XK_e,          spawn,                  {.v = (const char*[]){ FILEMANAGER, NULL } } },
 	{ MODKEY,                       XK_q,          killclient,             {0} },
 	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {1} },
@@ -324,11 +330,11 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
 
-	{ 0, 				XF86XK_AudioMute,        spawn,        {.v = mute_vol } },
-        { 0, 				XF86XK_AudioLowerVolume, spawn,        {.v = down_vol } },
-        { 0, 				XF86XK_AudioRaiseVolume, spawn,        {.v = up_vol } },
-	{ 0, 				XF86XK_MonBrightnessDown, spawn,       {.v = dimmer } },
-        { 0, 				XF86XK_MonBrightnessUp,   spawn,       {.v = brighter } },
+	{ 0, 				                    XF86XK_AudioMute,         spawn,       {.v = mute_vol } },
+  { 0, 				                    XF86XK_AudioLowerVolume,  spawn,       {.v = down_vol } },
+  { 0, 				                    XF86XK_AudioRaiseVolume,  spawn,       {.v = up_vol } },
+	{ 0, 				                    XF86XK_MonBrightnessDown, spawn,       {.v = dimmer } },
+  { 0, 				                    XF86XK_MonBrightnessUp,   spawn,       {.v = brighter } },
 
 
 	TAGKEYS(                        XK_1,                                  0)
